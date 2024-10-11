@@ -4,9 +4,16 @@
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-white dark:bg-gray-900;
+
+  font-family: system-ui, sans-serif;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
+}
+
+.container {
+  width: min(100% - 2rem, 60rem);
+  margin-inline: auto;
 }

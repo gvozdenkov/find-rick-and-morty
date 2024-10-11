@@ -17,7 +17,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body>
         <header className="pt-10 pb-10">
           <div className="container">
-            <h1 className="text-2xl text-center">Rick and Morty Universe</h1>
+            <h1 className="text-3xl text-center">Rick and Morty Universe</h1>
           </div>
         </header>
         <div className="container">{children}</div>

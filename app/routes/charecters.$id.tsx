@@ -15,16 +15,31 @@ export default function Charecter() {
   console.log('charecter:', data);
 
   return (
-    <section className="flex gap-4 flex-col h-screen items-center justify-center">
-      <img src={image} alt={`${name} avatar.`} className="rounded-full" />
-      <h1>{name}</h1>
-      <p>Gender: {gender}</p>
-      <p>Species: {species}</p>
-      <p>Status: {status}</p>
-      <p>Location: {location.name}</p>
+    <div className="flex flex-col gap-8 items-start">
+      <article className="grid grid-rows-[1fr_2fr] sm:grid-rows-1 sm:grid-cols-[1fr_2fr] | w-full bg-gray-800 border border-gray-700 rounded-3xl overflow-hidden">
+        <img src={image} alt={`${name} avatar.`} className="w-full h-full object-cover" />
+        <div className="flex flex-col gap-4 p-4">
+          <header>
+            <h1 className="text-2xl font-bold">{name}</h1>
+            {
+              <>
+                <p className="text-slate-400">
+                  {species} / {gender}
+                </p>
+                <p className={`status status_${status.toLowerCase()}`}>{status}</p>
+              </>
+            }
+          </header>
+          <ul>
+            <li className="flex flex-col text-base mb-4">
+              <span className="text-slate-500">Last known location:</span> {location.name}
+            </li>
+          </ul>
+        </div>
+      </article>
       <button onClick={() => navigate(-1)} className="border pl-6 pr-6 pt-2 pb-2" type="button">
         Back
       </button>
-    </section>
+    </div>
   );
 }

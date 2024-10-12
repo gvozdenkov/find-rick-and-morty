@@ -1,6 +1,8 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
 import type { LinksFunction } from '@remix-run/node';
 
+import { Footer } from './footer';
+
 import './tailwind.css';
 
 export const links: LinksFunction = () => [];
@@ -21,6 +23,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </header>
         <div className="container">{children}</div>
+        <Footer />
         <ScrollRestoration />
         <Scripts />
       </body>

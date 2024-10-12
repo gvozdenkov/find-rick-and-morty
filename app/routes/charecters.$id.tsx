@@ -19,8 +19,8 @@ export default function Charecter() {
   const { name, gender, image, location, status, species } = data;
 
   return (
-    <div className="flex flex-col gap-8 items-start">
-      <article className="grid grid-rows-[1fr_2fr] sm:grid-rows-1 sm:grid-cols-[1fr_2fr] | w-full bg-gray-800 border border-gray-700 rounded-3xl overflow-hidden">
+    <div className="flex flex-col gap-8 items-center">
+      <article className="grid sm:grid-rows-1 sm:grid-cols-[1fr_2fr] | w-full bg-gray-800 border border-gray-700 rounded-3xl overflow-hidden">
         <img src={image} alt={`${name} avatar.`} className="w-full h-full object-cover" />
         <div className="flex flex-col gap-4 p-4">
           <header>

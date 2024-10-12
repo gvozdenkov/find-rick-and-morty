@@ -3,8 +3,13 @@ import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
+  base: '/find-rick-and-morty/',
+  build: {
+    emptyOutDir: true,
+  },
   plugins: [
     remix({
+      basename: '/find-rick-and-morty/',
       ssr: false,
       future: {
         v3_fetcherPersist: true,

@@ -1,5 +1,5 @@
 {
-  "name": "rick-and-morty-search",
+  "name": "find-rick-and-morty",
   "private": true,
   "sideEffects": false,
   "type": "module",
@@ -7,14 +7,12 @@
     "build": "remix vite:build",
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
-    "start": "remix-serve ./build/server/index.js",
+    "preview": "vite preview",
     "typecheck": "tsc"
   },
   "dependencies": {
     "@remix-run/node": "^2.12.1",
     "@remix-run/react": "^2.12.1",
-    "@remix-run/serve": "^2.12.1",
-    "isbot": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rickmortyapi": "^2.3.0"

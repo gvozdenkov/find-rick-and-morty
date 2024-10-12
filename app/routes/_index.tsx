@@ -1,12 +1,13 @@
-import { Form, Link, useLoaderData } from '@remix-run/react';
-import { json } from '@remix-run/node';
-import type {
-  ActionFunction,
-  ActionFunctionArgs,
-  LoaderFunction,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from '@remix-run/node';
+import {
+  ClientActionFunction,
+  ClientActionFunctionArgs,
+  ClientLoaderFunction,
+  ClientLoaderFunctionArgs,
+  Form,
+  Link,
+  useLoaderData,
+} from '@remix-run/react';
+import { MetaFunction } from '@remix-run/node';
 import { Character, getCharacters, Info } from 'rickmortyapi';
 
 export const meta: MetaFunction = () => {
@@ -17,7 +18,7 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const action: ActionFunction = async ({ request }: ActionFunctionArgs) => {
+export const clientAction: ClientActionFunction = async ({ request }: ClientActionFunctionArgs) => {
   const formData = await request.formData();
   const q = Object.fromEntries(formData);
   const cheracter = await getCharacters({
@@ -26,10 +27,10 @@ export const action: ActionFunction = async ({ request }: ActionFunctionArgs) =>
     species: q.species as string,
   });
 
-  return json({ cheracter });
+  return { cheracter };
 };
 
-export const loader: LoaderFunction = async ({ request }: LoaderFunctionArgs) => {
+export const clientLoader: ClientLoaderFunction = async ({ request }: ClientLoaderFunctionArgs) => {
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
   const { data } = await getCharacters({
@@ -38,7 +39,7 @@ export const loader: LoaderFunction = async ({ request }: LoaderFunctionArgs) =>
     species: search.get('species')!,
   });
 
-  return json(data);
+  return data;
 };
 
 export default function Index() {

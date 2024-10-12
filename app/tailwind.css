@@ -47,3 +47,22 @@ body {
 .status_unknown::before {
   background-color: #e69d3e;
 }
+
+.button {
+  border: 1px solid #acacac;
+  border-radius: 8px;
+  padding: 0.5em 1.5em;
+
+  transition: ease-out 250ms;
+}
+
+.button:hover,
+.button:focus {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.13);
+}
+
+.button:disabled {
+  color: hsl(215, 16%, 75%);
+  border-color: hsl(215, 16%, 85%);
+  box-shadow: none;
+}

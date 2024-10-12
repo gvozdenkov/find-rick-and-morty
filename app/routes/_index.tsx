@@ -6,6 +6,7 @@ import {
   Form,
   Link,
   useLoaderData,
+  useSearchParams,
 } from '@remix-run/react';
 import { MetaFunction } from '@remix-run/node';
 import { Character, getCharacters, Info } from 'rickmortyapi';
@@ -22,6 +23,7 @@ export const clientAction: ClientActionFunction = async ({ request }: ClientActi
   const formData = await request.formData();
   const q = Object.fromEntries(formData);
   const cheracter = await getCharacters({
+    page: q.page ?? 1,
     name: q.name as string,
     status: q.status as string,
     species: q.species as string,
@@ -34,6 +36,7 @@ export const clientLoader: ClientLoaderFunction = async ({ request }: ClientLoad
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
   const { data } = await getCharacters({
+    page: search.get('page') ?? 1,
     name: search.get('name')!,
     status: search.get('status')!,
     species: search.get('species')!,
@@ -43,16 +46,24 @@ export const clientLoader: ClientLoaderFunction = async ({ request }: ClientLoad
 };
 
 export default function Index() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const { info, results } = useLoaderData<Info<Character[]>>();
   console.log('results:', results, 'info:', info);
 
+  const nameDefault = searchParams.get('name');
+  const statusDefault = searchParams.get('status');
+  const speciesDefault = searchParams.get('species');
+  const episodeDefault = searchParams.get('episode');
+
+  const nextPage = info?.next ? new URL(info?.next ?? '').searchParams.get('page') : undefined;
+  const prevPage = info?.prev ? new URL(info?.prev ?? '').searchParams.get('page') : undefined;
+  console.log('next --->', nextPage);
+  console.log('prev --->', prevPage);
+  // const prevPage = info ? new URL(info?.prev) : undefined;
+
   return (
     <div className="flex gap-12 flex-col items-center justify-center">
-      <Form
-        method="get"
-        className="flex flex-col gap-6 w-full items-center"
-        aria-label="Find charecter"
-      >
+      <Form className="flex flex-col gap-6 w-full items-center" aria-label="Find charecter">
         <div className="flex flex-col gap-2 w-full">
           <label htmlFor="name">Charecter name</label>
           <input
@@ -61,6 +72,7 @@ export default function Index() {
             type="text"
             className="p-2 bg-transparent border rounded-lg dark:border-white"
             autoComplete="off"
+            defaultValue={nameDefault ?? undefined}
           />
         </div>
         <div className="flex flex-col gap-2 w-full">
@@ -69,6 +81,7 @@ export default function Index() {
             id="status"
             name="status"
             className="p-2 bg-transparent border rounded-lg dark:border-white"
+            defaultValue={statusDefault ?? undefined}
           >
             <option value=""></option>
             <option value="alive">Alive</option>
@@ -82,6 +95,7 @@ export default function Index() {
             id="species"
             name="species"
             className="p-2 bg-transparent border rounded-lg dark:border-white"
+            defaultValue={speciesDefault ?? undefined}
           >
             <option value="" className="bg-black"></option>
             <option value="human">Human</option>
@@ -106,37 +120,66 @@ export default function Index() {
             max="51"
             className="p-2 bg-transparent border rounded-lg dark:border-white"
             autoComplete="off"
+            defaultValue={episodeDefault ?? undefined}
           />
         </div>
-        <button className="border pl-6 pr-6 pt-2 pb-2" type="submit">
+        <button className="button" type="submit">
           Find
         </button>
       </Form>
 
       {results && (
-        <ul className="flex flex-col gap-2 w-full">
-          <h2 className="text-2xl mb-4">Found</h2>
-          {results.map((charecter) => (
-            <li
-              key={charecter.id}
-              className="border rounded p-2 hover:bg-white hover:bg-opacity-10"
-            >
-              <Link
-                to={`/charecters/${charecter.id}`}
-                className="flex gap-2"
-                title={charecter.name}
+        <>
+          <ul className="flex flex-col gap-2 w-full">
+            <h2 className="text-2xl mb-4">Found</h2>
+            {results.map((charecter) => (
+              <li
+                key={charecter.id}
+                className="border rounded p-2 hover:bg-white hover:bg-opacity-10"
               >
-                <span>{charecter.name}</span> -
-                <span className="text-slate-500">
-                  {charecter.species} / {charecter.gender}
-                </span>
-                <span className={`status status_${charecter.status.toLocaleLowerCase()}`}>
-                  {charecter.status}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+                <Link
+                  to={`/charecters/${charecter.id}`}
+                  className="flex gap-2 items-center"
+                  title={charecter.name}
+                >
+                  <span>{charecter.name}</span> -
+                  <span className="text-slate-500">
+                    {charecter.species} / {charecter.gender}
+                  </span>
+                  <span className={`status status_${charecter.status.toLocaleLowerCase()}`}>
+                    {charecter.status}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="flex gap-4">
+            <button
+              className="button"
+              onClick={() => {
+                setSearchParams((prev) => {
+                  prev.set('page', prevPage + '');
+                  return prev;
+                });
+              }}
+              disabled={!prevPage}
+            >
+              prev
+            </button>
+            <button
+              className="button"
+              onClick={() => {
+                setSearchParams((prev) => {
+                  prev.set('page', nextPage + '');
+                  return prev;
+                });
+              }}
+              disabled={!nextPage}
+            >
+              next
+            </button>
+          </div>
+        </>
       )}
     </div>
   );

@@ -17,7 +17,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="flex flex-col h-screen">
         <header className="py-10 | sm:py-15">
           <div className="container">
             <h1 className="text-4xl text-center rick-title | sm:text-6xl">
@@ -25,7 +25,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </h1>
           </div>
         </header>
-        <div className="container">{children}</div>
+        <div className="container | grow">{children}</div>
         <Footer />
         <ScrollRestoration />
         <Scripts />

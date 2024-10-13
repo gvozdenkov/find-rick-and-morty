@@ -4,12 +4,12 @@ import {
   ClientLoaderFunction,
   ClientLoaderFunctionArgs,
   Form,
-  Link,
   useLoaderData,
   useSearchParams,
 } from '@remix-run/react';
 import { MetaFunction } from '@remix-run/node';
 import { Character, getCharacters, Info } from 'rickmortyapi';
+import { SearchResults } from '~/search-results';
 
 export const meta: MetaFunction = () => {
   return [
@@ -23,7 +23,7 @@ export const clientAction: ClientActionFunction = async ({ request }: ClientActi
   const formData = await request.formData();
   const q = Object.fromEntries(formData);
   const cheracter = await getCharacters({
-    page: q.page ?? 1,
+    page: +(q.page ?? 1),
     name: q.name as string,
     status: q.status as string,
     species: q.species as string,
@@ -36,7 +36,7 @@ export const clientLoader: ClientLoaderFunction = async ({ request }: ClientLoad
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
   const { data } = await getCharacters({
-    page: search.get('page') ?? 1,
+    page: +(search.get('page') ?? 1),
     name: search.get('name')!,
     status: search.get('status')!,
     species: search.get('species')!,
@@ -46,7 +46,7 @@ export const clientLoader: ClientLoaderFunction = async ({ request }: ClientLoad
 };
 
 export default function Index() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const { info, results } = useLoaderData<Info<Character[]>>();
   console.log('results:', results, 'info:', info);
 
@@ -54,12 +54,6 @@ export default function Index() {
   const statusDefault = searchParams.get('status');
   const speciesDefault = searchParams.get('species');
   const episodeDefault = searchParams.get('episode');
-
-  const nextPage = info?.next ? new URL(info?.next ?? '').searchParams.get('page') : undefined;
-  const prevPage = info?.prev ? new URL(info?.prev ?? '').searchParams.get('page') : undefined;
-  console.log('next --->', nextPage);
-  console.log('prev --->', prevPage);
-  // const prevPage = info ? new URL(info?.prev) : undefined;
 
   return (
     <div className="flex gap-12 flex-col items-center justify-center">
@@ -130,62 +124,7 @@ export default function Index() {
         </button>
       </Form>
 
-      {results && (
-        <section className="flex flex-col gap-6 w-full">
-          <h2 className="text-2xl">
-            Found&nbsp;<span className="text-slate-500">{info?.count} charecters</span>
-          </h2>
-          <ul className="flex flex-col gap-2 w-full">
-            {results.map((charecter) => (
-              <li key={charecter.id} className="border rounded hover:bg-white hover:bg-opacity-10">
-                <Link
-                  to={`/charecters/${charecter.id}`}
-                  className="flex gap-2 items-center p-2"
-                  title={charecter.name}
-                >
-                  <div className="flex flex-col | sm:flex-row sm:gap-2 sm:items-center">
-                    <span>{charecter.name}</span>
-                    <span className="text-xs text-slate-500">
-                      {charecter.species} / {charecter.gender}
-                    </span>
-                  </div>
-                  <span
-                    className={`status status_${charecter.status.toLocaleLowerCase()} | ml-auto`}
-                  >
-                    {charecter.status}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <div className="flex gap-4 place-self-center">
-            <button
-              className="button"
-              onClick={() => {
-                setSearchParams((prev) => {
-                  prev.set('page', prevPage + '');
-                  return prev;
-                });
-              }}
-              disabled={!prevPage}
-            >
-              prev
-            </button>
-            <button
-              className="button"
-              onClick={() => {
-                setSearchParams((prev) => {
-                  prev.set('page', nextPage + '');
-                  return prev;
-                });
-              }}
-              disabled={!nextPage}
-            >
-              next
-            </button>
-          </div>
-        </section>
-      )}
+      {results && <SearchResults searchResults={{ info, results }} />}
     </div>
   );
 }

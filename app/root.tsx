@@ -4,6 +4,7 @@ import type { LinksFunction } from '@remix-run/node';
 import { Footer } from './footer';
 
 import './tailwind.css';
+import './fonts/fonts.css';
 
 export const links: LinksFunction = () => [];
 
@@ -17,9 +18,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <header className="pt-10 pb-10">
+        <header className="py-10 | sm:py-15">
           <div className="container">
-            <h1 className="text-3xl text-center">Rick and Morty Universe</h1>
+            <h1 className="text-4xl text-center rick-title | sm:text-6xl">
+              Rick and Morty Universe
+            </h1>
           </div>
         </header>
         <div className="container">{children}</div>

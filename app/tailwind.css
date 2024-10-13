@@ -20,7 +20,19 @@ body {
       border-color: hsl(215, 16%, 40%);
       box-shadow: none;
     }
+
+    .rick-title {
+      -webkit-text-stroke: 1px rgb(95, 226, 34);
+      text-shadow: 1px 1px 2px rgb(67, 242, 13), 0 0 0.2em rgb(129, 230, 106);
+    }
   }
+}
+
+.rick-title {
+  font-family: 'RickAndMorty';
+  color: #01b0cc;
+  -webkit-text-stroke: 1px rgb(43, 43, 43);
+  text-shadow: 1px 1px 2px rgb(67, 242, 13), 0 0 0.2em rgb(100, 213, 74);
 }
 
 .container {

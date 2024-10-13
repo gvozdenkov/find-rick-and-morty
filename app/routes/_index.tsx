@@ -64,8 +64,8 @@ export default function Index() {
   return (
     <div className="flex gap-12 flex-col items-center justify-center">
       <Form className="flex flex-col gap-6 w-full" aria-label="Find charecter">
-        <div className="grid grid-cols-1 gap-6 items-center | sm:grid-cols-6 md:gap-y-2">
-          <div className="flex flex-col gap-2 w-full | sm:col-span-full">
+        <div className="grid grid-cols-1 gap-3 items-center | sm:grid-cols-6 md:gap-y-2">
+          <div className="flex flex-col gap-1 w-full | sm:col-span-full">
             <label htmlFor="name">Charecter name</label>
             <input
               id="name"
@@ -76,7 +76,7 @@ export default function Index() {
               defaultValue={nameDefault ?? undefined}
             />
           </div>
-          <div className="flex flex-col gap-2 w-full | sm:col-span-3 md:col-span-2">
+          <div className="flex flex-col gap-1 w-full | sm:col-span-3 md:col-span-2">
             <label htmlFor="status">Status</label>
             <select
               id="status"
@@ -90,7 +90,7 @@ export default function Index() {
               <option value="unknown">unknown</option>
             </select>
           </div>
-          <div className="flex flex-col gap-2 w-full | sm:col-span-3 md:col-span-2">
+          <div className="flex flex-col gap-1 w-full | sm:col-span-3 md:col-span-2">
             <label htmlFor="species">Species</label>
             <select
               id="species"
@@ -111,7 +111,7 @@ export default function Index() {
               <option value="unknown">unknown</option>
             </select>
           </div>
-          <div className="flex flex-col gap-2 w-full | sm:col-span-full md:col-span-2">
+          <div className="flex flex-col gap-1 w-full | sm:col-span-full md:col-span-2">
             <label htmlFor="episode">Episode</label>
             <input
               id="episode"
@@ -133,7 +133,7 @@ export default function Index() {
       {results && (
         <section className="flex flex-col gap-6 w-full">
           <h2 className="text-2xl">
-            Found&nbsp;<span className="text-slate-500">{info?.count} charecter</span>
+            Found&nbsp;<span className="text-slate-500">{info?.count} charecters</span>
           </h2>
           <ul className="flex flex-col gap-2 w-full">
             {results.map((charecter) => (

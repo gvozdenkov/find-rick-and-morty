@@ -1,20 +1,25 @@
 import {
   ClientLoaderFunction,
   ClientLoaderFunctionArgs,
+  Link,
   useLoaderData,
   useNavigate,
 } from '@remix-run/react';
 
 import { getCharacter } from 'rickmortyapi';
+import { getLastUrlSegment } from '~/utils';
 
 export const clientLoader: ClientLoaderFunction = async ({ params }: ClientLoaderFunctionArgs) => {
   const { data } = await getCharacter(+params.id!);
-  return { data };
+  const locationUrl = data.location.url;
+  const locationId = getLastUrlSegment(locationUrl);
+  return { data, locationId };
 };
 
 export default function Charecter() {
   const navigate = useNavigate();
-  const { data } = useLoaderData<typeof clientLoader>();
+  const { data, locationId } = useLoaderData<typeof clientLoader>();
+  console.log('data->', data, 'location:', locationId);
 
   const { name, gender, image, location, status, species } = data;
 
@@ -36,7 +41,10 @@ export default function Charecter() {
           </header>
           <ul>
             <li className="flex flex-col text-base mb-4">
-              <span className="text-slate-500">Last known location:</span> {location.name}
+              <span className="text-slate-500">Last known location:</span>
+              <Link to={`/location/${locationId}`} className="text-link">
+                {location.name}
+              </Link>
             </li>
           </ul>
         </div>

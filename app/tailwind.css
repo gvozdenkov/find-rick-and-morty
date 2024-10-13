@@ -84,3 +84,7 @@ body {
   border-color: hsl(215, 16%, 85%);
   box-shadow: none;
 }
+
+.text-link:hover {
+  color: #01b0cc;
+}

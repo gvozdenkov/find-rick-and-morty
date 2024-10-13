@@ -19,7 +19,6 @@ export const clientLoader: ClientLoaderFunction = async ({ params }: ClientLoade
 export default function Charecter() {
   const navigate = useNavigate();
   const { data, locationId } = useLoaderData<typeof clientLoader>();
-  console.log('data->', data, 'location:', locationId);
 
   const { name, gender, image, location, status, species } = data;
 

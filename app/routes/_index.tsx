@@ -48,7 +48,6 @@ export const clientLoader: ClientLoaderFunction = async ({ request }: ClientLoad
 export default function Index() {
   const [searchParams] = useSearchParams();
   const { info, results } = useLoaderData<Info<Character[]>>();
-  console.log('results:', results, 'info:', info);
 
   const nameDefault = searchParams.get('name');
   const statusDefault = searchParams.get('status');

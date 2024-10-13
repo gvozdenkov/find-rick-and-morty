@@ -20,7 +20,7 @@ export default function Charecter() {
 
   return (
     <div className="flex flex-col gap-8 items-center">
-      <article className="grid sm:grid-rows-1 sm:grid-cols-[1fr_2fr] | w-full bg-gray-800 border border-gray-700 rounded-3xl overflow-hidden">
+      <article className="grid w-full border border-gray-700 rounded-3xl overflow-hidden | sm:grid-rows-1 sm:grid-cols-[1fr_2fr]">
         <img src={image} alt={`${name} avatar.`} className="w-full h-full object-cover" />
         <div className="flex flex-col gap-4 p-4">
           <header>
@@ -41,7 +41,7 @@ export default function Charecter() {
           </ul>
         </div>
       </article>
-      <button onClick={() => navigate(-1)} className="border pl-6 pr-6 pt-2 pb-2" type="button">
+      <button onClick={() => navigate(-1)} className="button" type="button">
         Back
       </button>
     </div>

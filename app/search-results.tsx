@@ -1,5 +1,6 @@
-import { Link, useSearchParams } from '@remix-run/react';
+import { useSearchParams } from '@remix-run/react';
 import { Character, Info } from 'rickmortyapi';
+import { CharecterSearchResultItem } from './charecter-search-result-item';
 
 export const SearchResults = ({ searchResults }: { searchResults: Info<Character[]> }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -16,23 +17,7 @@ export const SearchResults = ({ searchResults }: { searchResults: Info<Character
       </h2>
       <ul className="flex flex-col gap-2 w-full">
         {results!.map((charecter) => (
-          <li key={charecter.id} className="border rounded hover:bg-white hover:bg-opacity-10">
-            <Link
-              to={`/charecters/${charecter.id}`}
-              className="flex gap-2 items-center p-2"
-              title={charecter.name}
-            >
-              <div className="flex flex-col | sm:flex-row sm:gap-2 sm:items-center">
-                <span>{charecter.name}</span>
-                <span className="text-xs text-slate-500">
-                  {charecter.species} / {charecter.gender}
-                </span>
-              </div>
-              <span className={`status status_${charecter.status.toLocaleLowerCase()} | ml-auto`}>
-                {charecter.status}
-              </span>
-            </Link>
-          </li>
+          <CharecterSearchResultItem charecter={charecter} key={charecter.id} />
         ))}
       </ul>
       <div className="flex gap-4 place-self-center">

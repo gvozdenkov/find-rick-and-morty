@@ -6,7 +6,13 @@ import { Footer } from './footer';
 import './tailwind.css';
 import './fonts/fonts.css';
 
-export const links: LinksFunction = () => [];
+export const links: LinksFunction = () => [
+  {
+    rel: 'icon',
+    href: '/find-rick-and-morty/favicon.svg',
+    type: 'image/svg+xml',
+  },
+];
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

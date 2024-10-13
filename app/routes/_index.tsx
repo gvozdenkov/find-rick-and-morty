@@ -13,7 +13,7 @@ import { SearchResults } from '~/search-results';
 
 export const meta: MetaFunction = () => {
   return [
-    { title: 'Rick and Morty Search' },
+    { title: 'Find Rick and Morty' },
     { name: 'description', content: 'Find any character from the Rick and Morty universe' },
     { name: 'author', content: 'arty gvozdenkov' },
   ];

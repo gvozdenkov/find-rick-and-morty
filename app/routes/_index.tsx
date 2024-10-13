@@ -131,31 +131,34 @@ export default function Index() {
       </Form>
 
       {results && (
-        <>
+        <section className="flex flex-col gap-6 w-full">
+          <h2 className="text-2xl">
+            Found&nbsp;<span className="text-slate-500">{info?.count} charecter</span>
+          </h2>
           <ul className="flex flex-col gap-2 w-full">
-            <h2 className="text-2xl mb-4">Found</h2>
             {results.map((charecter) => (
-              <li
-                key={charecter.id}
-                className="border rounded p-2 hover:bg-white hover:bg-opacity-10"
-              >
+              <li key={charecter.id} className="border rounded hover:bg-white hover:bg-opacity-10">
                 <Link
                   to={`/charecters/${charecter.id}`}
-                  className="flex gap-2 items-center"
+                  className="flex gap-2 items-center p-2"
                   title={charecter.name}
                 >
-                  <span>{charecter.name}</span> -
-                  <span className="text-slate-500">
-                    {charecter.species} / {charecter.gender}
-                  </span>
-                  <span className={`status status_${charecter.status.toLocaleLowerCase()}`}>
+                  <div className="flex flex-col | sm:flex-row sm:gap-2 sm:items-center">
+                    <span>{charecter.name}</span>
+                    <span className="text-xs text-slate-500">
+                      {charecter.species} / {charecter.gender}
+                    </span>
+                  </div>
+                  <span
+                    className={`status status_${charecter.status.toLocaleLowerCase()} | ml-auto`}
+                  >
                     {charecter.status}
                   </span>
                 </Link>
               </li>
             ))}
           </ul>
-          <div className="flex gap-4">
+          <div className="flex gap-4 place-self-center">
             <button
               className="button"
               onClick={() => {
@@ -181,7 +184,7 @@ export default function Index() {
               next
             </button>
           </div>
-        </>
+        </section>
       )}
     </div>
   );

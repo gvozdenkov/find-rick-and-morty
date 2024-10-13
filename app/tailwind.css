@@ -14,6 +14,12 @@ body {
     select option {
       @apply bg-gray-900;
     }
+
+    .button:disabled {
+      color: hsl(215, 16%, 40%);
+      border-color: hsl(215, 16%, 40%);
+      box-shadow: none;
+    }
   }
 }
 

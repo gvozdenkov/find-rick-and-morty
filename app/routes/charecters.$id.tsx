@@ -26,7 +26,7 @@ export default function Charecter() {
     <div className="flex flex-col gap-8 items-center">
       <article className="grid w-full border border-gray-700 rounded-3xl overflow-hidden | sm:grid-rows-1 sm:grid-cols-[1fr_2fr]">
         <img src={image} alt={`${name} avatar.`} className="w-full h-full object-cover" />
-        <div className="flex flex-col gap-4 p-4">
+        <div className="flex flex-col gap-6 p-4">
           <header>
             <h1 className="text-2xl font-bold">{name}</h1>
             {
@@ -38,14 +38,16 @@ export default function Charecter() {
               </>
             }
           </header>
-          <ul>
-            <li className="flex flex-col text-base mb-4">
-              <span className="text-slate-500">Last known location:</span>
-              <Link to={`/location/${locationId}`} className="text-link">
-                {location.name}
-              </Link>
-            </li>
-          </ul>
+          <dl className="flex flex-col gap-2">
+            <div className="flex flex-col text-base">
+              <dt className="text-slate-500">Last known location:</dt>
+              <dt>
+                <Link to={`/location/${locationId}`} className="text-link">
+                  {location.name}
+                </Link>
+              </dt>
+            </div>
+          </dl>
         </div>
       </article>
       <button onClick={() => navigate(-1)} className="button" type="button">
